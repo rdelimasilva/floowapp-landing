@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>floow para você</title>
+<meta name="description" content="floow: suas finanças no automático e você em estado de flow.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="floow.css">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+
+<body>
+<div class="personal" id="topo">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+<symbol id="i-pie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><circle cx="16" cy="12" r="2.5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+<symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7 7 17"/><path d="M17 17H7V7"/></symbol>
+<symbol id="i-compare" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
+</defs></svg>
+<header class="nav"><div class="wrap">
+  <a href="#topo" style="text-decoration:none"><span class="logo inst" aria-label="floow"><span>fl</span><svg viewBox="0.2 4.3 69 33.4" aria-hidden="true"><circle cx="16.9" cy="21" r="12.6"/><circle cx="52.5" cy="21" r="12.6"/></svg><span>w</span></span></a>
+  <nav class="nav-links" aria-label="Seções"><a href="#como">Como funciona</a><a href="#recursos">Recursos</a><a href="#avisos">Avisos</a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a></nav>
+  <div class="nav-end">
+    <nav class="line-switch" aria-label="Escolha o floow">
+      <a href="index.html" aria-current="page">Para você</a><a href="empresas.html" >Para empresas <span class="soon">Em breve</span></a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#comecar">Começar agora</a>
+  </div>
+</div></header>
+<main>
+<section class="hero"><div class="wrap">
+  <div class="hero-copy">
+    <span class="overline accent">floow · para você</span>
+    <h1>Finanças no automático. Sua mente em <em>estado de flow</em>.</h1>
+    <p class="lead">O floow organiza suas contas, separa cada gasto por categoria e avisa o que vem a seguir. Você respira tranquilo e sabe exatamente para onde vai o seu dinheiro.</p>
+    <div class="hero-ctas"><a class="btn btn-primary" href="#comecar">Começar agora <svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
+    <div class="hero-notes"><span><svg aria-hidden="true"><use href="#i-check"/></svg>Categorização automática</span><span><svg aria-hidden="true"><use href="#i-check"/></svg>Avisos no WhatsApp</span><span><svg aria-hidden="true"><use href="#i-check"/></svg>Sem planilha</span></div>
+  </div>
+  <div class="hero-art">
+  <div class="disc"></div><svg class="rings" viewBox="0 0 500 510" aria-hidden="true">
+  <circle class="r4" cx="250" cy="250" r="244"/>
+  <circle class="r3" cx="250" cy="250" r="210"/>
+  <circle class="r2" cx="250" cy="250" r="168"/>
+  <circle class="r1" cx="250" cy="250" r="126"/>
+</svg><svg class="woman" viewBox="0 0 400 420" role="img" aria-label="Mulher sentada em posição de meditação, de frente, com os olhos fechados">
+  <ellipse cx="200" cy="398" rx="170" ry="14" fill="var(--mat)"/>
+  <path d="M158 116 C156 72 244 72 242 116 L248 176 C232 188 168 188 152 176 Z" fill="var(--hair-c)"/>
+  <path d="M146 206 C126 250 118 292 112 330" stroke="var(--skin)" stroke-width="21" stroke-linecap="round" fill="none"/>
+  <path d="M254 206 C274 250 282 292 288 330" stroke="var(--skin)" stroke-width="21" stroke-linecap="round" fill="none"/>
+  <rect x="189" y="146" width="22" height="34" rx="9" fill="var(--skin-shade)"/>
+  <g class="chest">
+    <path d="M200 172 C167 172 146 180 138 204 L158 306 L242 306 L262 204 C254 180 233 172 200 172 Z" fill="var(--top)"/>
+    <path d="M184 173 Q200 194 216 173 Z" fill="var(--skin-shade)"/>
+    <path d="M146 206 C138 226 134 240 131 256" stroke="var(--top)" stroke-width="25" stroke-linecap="round" fill="none"/>
+    <path d="M254 206 C262 226 266 240 269 256" stroke="var(--top)" stroke-width="25" stroke-linecap="round" fill="none"/>
+    <path d="M160 296 H240" stroke="var(--top-shade)" stroke-width="12" stroke-linecap="round"/>
+  </g>
+  <ellipse cx="200" cy="118" rx="30" ry="35" fill="var(--skin)"/>
+  <path d="M168 120 C164 84 236 84 232 120 C228 101 214 92 200 92 C186 92 172 101 168 120 Z" fill="var(--hair-c)"/>
+  <circle cx="200" cy="70" r="15" fill="var(--hair-c)"/>
+  <path d="M181 123 Q187.5 128.5 194 123 M206 123 Q212.5 128.5 219 123" stroke="var(--hair-c)" stroke-width="2.3" stroke-linecap="round" fill="none"/>
+  <path d="M194 139 Q200 143 206 139" stroke="#8A4B3A" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <circle cx="181" cy="133" r="5" fill="#E8574A" opacity=".18"/><circle cx="219" cy="133" r="5" fill="#E8574A" opacity=".18"/>
+  <path d="M76 356 C76 320 140 300 200 307 C260 300 324 320 324 356 C324 386 262 398 200 394 C138 398 76 386 76 356 Z" fill="var(--pants)"/>
+  <path d="M112 356 C150 342 250 342 288 356" stroke="var(--pants-fold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M200 312 V340" stroke="var(--pants-fold)" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="160" cy="358" rx="20" ry="8" transform="rotate(-8 160 358)" fill="var(--skin)"/>
+  <ellipse cx="240" cy="358" rx="20" ry="8" transform="rotate(8 240 358)" fill="var(--skin)"/>
+  <circle cx="110" cy="334" r="12" fill="var(--skin)"/><circle cx="290" cy="334" r="12" fill="var(--skin)"/>
+  <circle cx="104" cy="330" r="4.2" fill="none" stroke="var(--skin-shade)" stroke-width="2"/><circle cx="296" cy="330" r="4.2" fill="none" stroke="var(--skin-shade)" stroke-width="2"/>
+</svg>
+  <span class="flow-label">Estado de flow</span><div class="chip c1"><span class="ico pos"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><strong>Conta de luz paga</strong><span class="num">No automático · R$ 186,40</span></div></div><div class="chip c2"><span class="ico acc"><svg aria-hidden="true"><use href="#i-pie"/></svg></span><div>Você gastou <strong style="display:inline" class="num">R$ 316,90</strong> em transporte neste mês.</div></div><div class="chip c3"><span class="ico warn"><svg aria-hidden="true"><use href="#i-bell"/></svg></span><div><strong>Fatura vence dia 10</strong>Avisamos 3 dias antes.</div></div>
+</div>
+</div></section>
+
+<section class="block band" id="como"><div class="wrap">
+  <div class="sec-head"><span class="overline accent">Como funciona</span><h2>Um mês inteiro rodando sozinho.</h2><p>Você segue a vida. O floow acompanha cada entrada e cada saída, e só chama sua atenção quando vale a pena.</p></div>
+  <div class="timeline"><div class="tl-item"><div class="tl-dot num">1</div><div class="tl-when">Dia 1</div><h3>O salário entra</h3><p>O floow reconhece a entrada e já separa o que tem destino certo: aluguel, contas fixas e assinaturas.</p><span class="tl-tag">Automático</span></div><div class="tl-item"><div class="tl-dot num">5</div><div class="tl-when">Dia 5</div><h3>Contas fixas em dia</h3><p>Aluguel, luz e internet aparecem agendadas, com data e valor. Nada vence sem você saber.</p><span class="tl-tag">Automático</span></div><div class="tl-item"><div class="tl-dot num">15</div><div class="tl-when">Dia 15</div><h3>Aviso de ritmo</h3><p>No meio do mês, chega no seu WhatsApp como estão os gastos em relação ao mês anterior.</p></div><div class="tl-item"><div class="tl-dot num">30</div><div class="tl-when">Dia 30</div><h3>Resumo do mês</h3><p>Quanto entrou, quanto saiu e para onde foi. Um retrato simples, sem planilha.</p></div></div>
+</div></section>
+
+<section class="block" id="recursos"><div class="wrap split">
+  <div>
+    <span class="overline accent">Clareza</span>
+    <h2 style="margin-top:14px">Você sabe para onde vai cada real.</h2>
+    <p class="lead" style="margin-top:16px">Tudo o que você gasta ganha nome e lugar. Sem digitar, sem categorizar na mão.</p>
+    <ul class="bullets"><li><span class="ico"><svg aria-hidden="true"><use href="#i-pie"/></svg></span><div><strong>Categorias automáticas</strong><span>Mercado, transporte, casa, lazer. Cada gasto encontra o seu lugar sozinho.</span></div></li><li><span class="ico"><svg aria-hidden="true"><use href="#i-repeat"/></svg></span><div><strong>Recorrências sob controle</strong><span>Assinaturas e contas fixas identificadas, com data e valor de cada mês.</span></div></li><li><span class="ico"><svg aria-hidden="true"><use href="#i-wallet"/></svg></span><div><strong>Tudo em um só lugar</strong><span>Contas e cartões juntos em uma visão, com o saldo sempre atualizado.</span></div></li></ul>
+  </div>
+  <div>
+    <div class="phone" role="img" aria-label="Tela do floow no navegador do celular, com saldo e gastos de setembro por categoria">
+      <div class="phone-screen">
+        <div class="ph-browser"><span class="ph-aa">AA</span><div class="ph-url"><svg aria-hidden="true"><use href="#i-lock"/></svg><span>floowapp.com.br</span></div><span class="ph-reload"><svg aria-hidden="true"><use href="#i-repeat"/></svg></span></div><div class="ph-head"><span class="logo " aria-label="floow"><span>fl</span><svg viewBox="0.2 4.3 69 33.4" aria-hidden="true"><circle cx="16.9" cy="21" r="12.6"/><circle cx="52.5" cy="21" r="12.6"/></svg><span>w</span></span></div>
+        <div class="ph-card"><div class="ph-label">Saldo da Conta</div><div class="ph-big num">R$ 12.480,35</div><div class="ph-sub">+ 3,2% neste mês</div></div>
+        <div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><b style="color:var(--fg-1);font-size:14px">Setembro por categoria</b><span class="num" style="font-size:12px;color:var(--fg-3)">R$ 4.270,80</span></div><div class="cat"><b>Casa</b><span class="v num">2.150,00</span><div class="bar"><i style="width:100.0%;--c:var(--indigo)"></i></div></div><div class="cat"><b>Mercado</b><span class="v num">1.184,20</span><div class="bar"><i style="width:55.1%;--c:var(--coral)"></i></div></div><div class="cat"><b>Lazer</b><span class="v num">480,00</span><div class="bar"><i style="width:22.3%;--c:var(--gold)"></i></div></div><div class="cat"><b>Transporte</b><span class="v num">316,90</span><div class="bar"><i style="width:14.7%;--c:var(--teal)"></i></div></div><div class="cat"><b>Assinaturas</b><span class="v num">139,70</span><div class="bar"><i style="width:6.5%;--c:#5B6B80"></i></div></div></div>
+        <div class="ph-card" style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><div><b style="color:var(--fg-1);font-weight:500">Internet</b><div class="ph-label">Agendado · amanhã</div></div><span class="num" style="color:var(--fg-1);font-weight:600">− 119,90</span></div>
+        <div class="example-tag">Dados de exemplo</div>
+      </div>
+      <div class="ph-toolbar" aria-hidden="true"><span>‹</span><span>›</span><span>□</span><span>⋯</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="block band" id="avisos"><div class="wrap split rev">
+  <div>
+    <span class="overline accent">Avisos</span>
+    <h2 style="margin-top:14px">O floow fala com você no WhatsApp.</h2>
+    <p class="lead" style="margin-top:16px">Sem precisar abrir o floow. Um resumo curto no ritmo do seu mês e um aviso quando algo pede atenção.</p>
+    <ul class="bullets"><li><span class="ico"><svg aria-hidden="true"><use href="#i-bell"/></svg></span><div><strong>Aviso de ritmo</strong><span>Se os gastos de uma categoria aceleram, você fica sabendo antes do fim do mês.</span></div></li><li><span class="ico"><svg aria-hidden="true"><use href="#i-cal"/></svg></span><div><strong>Vencimentos</strong><span>Contas e faturas lembradas com antecedência, com valor e data.</span></div></li></ul>
+  </div>
+  <div><div class="chat" role="img" aria-label="Exemplo de mensagens do floow no WhatsApp">
+  <div class="chat-top"><span class="chat-av"><svg viewBox="0.2 4.3 69 33.4"><circle cx="16.9" cy="21" r="12.6" stroke="var(--ring-2)"/><circle cx="52.5" cy="21" r="12.6" stroke="var(--ring-2)"/></svg></span>
+  <div><b>floow</b><small>Avisos automáticos</small></div></div>
+  <div class="chat-body"><div class="msg"><b>Resumo de ritmo · semana 3</b><div class="kv num"><span>Gastos até agora</span><span>R$ 3.912,40</span><span>Ritmo do mês</span><span>Dentro do esperado</span><span>Maior categoria</span><span>Mercado</span></div><time>08:02</time></div><div class="msg">Você gastou <b class="num">R$ 316,90</b> em transporte neste mês. É 12% a mais que em agosto.<time>08:02</time></div><div class="msg">A fatura do cartão vence dia 10. Total de <b class="num">R$ 1.842,30</b>. Avisamos de novo na véspera.<time>09:15</time></div></div>
+</div></div>
+</div></section>
+
+<section class="block" id="seguranca"><div class="wrap">
+  <div class="sec-head"><span class="overline accent">Segurança</span><h2>Tranquilidade começa pela confiança.</h2></div>
+  <div class="safe">
+  <div><svg aria-hidden="true"><use href="#i-lock"/></svg><h3>Dados criptografados</h3><p>Suas informações trafegam e ficam guardadas com criptografia.</p></div>
+  <div><svg aria-hidden="true"><use href="#i-toggle"/></svg><h3>Você decide o que conectar</h3><p>Conecte e desconecte contas quando quiser. Os avisos também desligam com um toque.</p></div>
+  <div><svg aria-hidden="true"><use href="#i-shield"/></svg><h3>Sem venda de dados</h3><p>O floow existe para organizar o seu dinheiro. Seus dados não são produto.</p></div>
+</div>
+</div></section>
+
+<section class="block band" id="perguntas"><div class="wrap">
+  <div class="sec-head"><span class="overline accent">Perguntas</span><h2>O que as pessoas perguntam.</h2></div>
+  <div class="faq"><details><summary>Preciso preencher planilha?</summary><p>Não. O floow organiza e categoriza os lançamentos sozinho. Você só ajusta uma categoria se quiser.</p></details><details><summary>Como funcionam os avisos no WhatsApp?</summary><p>Você autoriza o seu número na sua conta floow e passa a receber o resumo de ritmo e os avisos de vencimento. Dá para desligar a qualquer momento.</p></details><details><summary>O floow vai me cobrar disciplina?</summary><p>Não. Ele mostra o que aconteceu e o que vem a seguir. As decisões continuam sendo suas.</p></details><details><summary>Tenho uma empresa. Posso usar o floow?</summary><p>Em breve. O <a href="empresas.html" style="color:var(--accent-ink);font-weight:600">floow para empresas</a> vai ter fluxo de caixa, contas a pagar, recebíveis e conciliação em um painel só.</p></details></div>
+</div></section>
+
+<section class="block tight" id="comecar"><div class="wrap">
+  <div class="cta-final">
+    <div><h2>Respire. O floow cuida do resto.</h2><p>Crie sua conta em poucos minutos e veja o seu mês organizado.</p></div>
+    <div class="ctas"><a class="btn btn-primary" href="#comecar">Começar agora</a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
+  </div>
+  <div class="cross"><p>Em breve: o caixa da sua empresa também no automático.</p><a href="empresas.html">Conheça o floow para empresas <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+</div></section>
+</main>
+<footer><div class="wrap">
+  <span class="logo inst" aria-label="floow"><span>fl</span><svg viewBox="0.2 4.3 69 33.4" aria-hidden="true"><circle cx="16.9" cy="21" r="12.6"/><circle cx="52.5" cy="21" r="12.6"/></svg><span>w</span></span>
+  <nav aria-label="Rodapé"><a href="index.html">Para você</a><a href="empresas.html">Para empresas <span class="soon">Em breve</span></a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a></nav>
+  <div class="legal"><span>© 2026 floow · Limm Consultoria Ltda</span><span>floowapp.com.br</span></div>
+</div></footer>
+</div>
+</body>
+</html>
