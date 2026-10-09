@@ -4,5 +4,12 @@
   "buildCommand": "",
   "installCommand": "",
   "outputDirectory": "dist",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path((?:auth|dashboard|accounts|billing|budgets|cash-flow|categories|cfo|debts|fixed-assets|help|investments|planning|settings|transactions|privacidade|api)(?:/.*)?)",
+      "destination": "https://app.floowapp.com.br/:path",
+      "permanent": true
+    }
+  ]
 }
