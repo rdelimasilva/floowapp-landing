@@ -10,6 +10,12 @@
       "source": "/:path((?:auth|dashboard|accounts|billing|budgets|cash-flow|categories|cfo|debts|fixed-assets|help|investments|planning|settings|transactions|privacidade|api)(?:/.*)?)",
       "destination": "https://app.floowapp.com.br/:path",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.floowapp.com.br" }],
+      "destination": "https://floowapp.com.br/:path*",
+      "permanent": true
     }
   ]
 }
