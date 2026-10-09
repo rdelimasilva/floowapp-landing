@@ -12,6 +12,12 @@
       "permanent": true
     },
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.floowapp.com.br" }],
+      "destination": "https://floowapp.com.br/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.floowapp.com.br" }],
       "destination": "https://floowapp.com.br/:path*",
