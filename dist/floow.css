@@ -101,11 +101,13 @@ p { margin: 0; }
 
 /* ---------- nav ---------- */
 .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; }
-.nav .wrap { display: flex; align-items: center; gap: 28px; height: 72px; }
-.nav-links { display: flex; gap: 24px; font-size: 15px; font-weight: 500; }
+.nav .wrap { display: flex; align-items: center; gap: 24px; height: 72px; }
+.nav-links { display: flex; gap: 20px; font-size: 15px; font-weight: 500; white-space: nowrap; }
 .nav-links a { text-decoration: none; color: var(--fg-2); }
 .nav-links a:hover { color: var(--fg-1); }
 .nav-end { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.nav-login { font-size: 15px; font-weight: 600; text-decoration: none; color: var(--fg-2); white-space: nowrap; }
+.nav-login:hover { color: var(--fg-1); }
 
 .line-switch { display: inline-flex; padding: 4px; background: var(--sunken); border: 1px solid var(--hair); border-radius: 999px; font-size: 14px; font-weight: 600; }
 .line-switch a { text-decoration: none; padding: 7px 14px; border-radius: 999px; color: var(--fg-3); white-space: nowrap; transition: color .2s, background .2s; }
@@ -119,7 +121,7 @@ p { margin: 0; }
 .btn-primary:hover { background: var(--accent-hover); }
 .btn-ghost { background: transparent; color: var(--fg-1); border-color: var(--hair-strong); }
 .btn-ghost:hover { border-color: var(--fg-3); }
-.btn-sm { min-height: 44px; padding: 0 16px; font-size: 15px; }
+.btn-sm { min-height: 44px; padding: 0 16px; font-size: 15px; white-space: nowrap; }
 .btn svg { width: 18px; height: 18px; }
 
 /* ---------- hero ---------- */
@@ -366,3 +368,6 @@ footer .legal { flex-basis: 100%; border-top: 1px solid var(--hair); padding-top
 .cta-final .btn-disabled { background: rgba(255,255,255,.08); color: #C3C7D4; border-color: rgba(255,255,255,.18); }
 .soon-note { font-size: 14px; color: var(--fg-3); }
 @media (max-width: 640px) { .line-switch .soon { margin-left: 4px; padding: 1px 5px; font-size: 9.5px; } .nav .logo { font-size: 22px; } }
+/* nav com "Entrar": os links de seção só cabem a partir de 1240px; no celular o selo "Em breve" sai para o "Entrar" caber */
+@media (max-width: 1240px) { .nav-links { display: none; } }
+@media (max-width: 440px) { .line-switch .soon { display: none; } .line-switch a { padding: 7px 8px; } .nav .wrap, .nav-end { gap: 8px; } .nav-login { font-size: 14px; } }

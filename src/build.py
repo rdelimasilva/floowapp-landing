@@ -80,6 +80,9 @@ def head(title, desc, full):
 <link rel="stylesheet" href="{CSS}">
 ''' + ('<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>\n</head>\n' if full else '')
 
+APP_LOGIN = "https://app.floowapp.com.br/auth"
+APP_SIGNUP = "https://app.floowapp.com.br/auth?tab=signup"
+
 def nav(current, links, cta):
     you = 'aria-current="page"' if current == "p" else ''
     biz = 'aria-current="page"' if current == "b" else ''
@@ -91,7 +94,7 @@ def nav(current, links, cta):
     <nav class="line-switch" aria-label="Escolha o floow">
       <a href="index.html" {you}>Para você</a><a href="empresas.html" {biz}>Para empresas <span class="soon">Em breve</span></a>
     </nav>
-    {('<a class="btn btn-primary btn-sm" href="#comecar">'+cta+'</a>') if cta else '<span class="btn btn-sm btn-disabled" aria-disabled="true">Em breve</span>'}
+    {(f'<a class="nav-login" href="{APP_LOGIN}">Entrar</a><a class="btn btn-primary btn-sm" href="{APP_SIGNUP}">'+cta+'</a>') if cta else '<span class="btn btn-sm btn-disabled" aria-disabled="true">Em breve</span>'}
   </div>
 </div></header>'''
 
@@ -127,7 +130,7 @@ def cta_final(h, p, primary, secondary, sec_href, cross_q, cross_link, cross_hre
     return f'''<section class="block tight" id="comecar"><div class="wrap">
   <div class="cta-final">
     <div><h2>{h}</h2><p>{p}</p></div>
-    <div class="ctas">{('<a class="btn btn-primary" href="#comecar">'+primary+'</a>') if primary else '<span class="btn btn-disabled" aria-disabled="true">Em breve</span>'}<a class="btn btn-ghost" href="{sec_href}">{secondary}</a></div>
+    <div class="ctas">{(f'<a class="btn btn-primary" href="{APP_SIGNUP}">'+primary+'</a>') if primary else '<span class="btn btn-disabled" aria-disabled="true">Em breve</span>'}<a class="btn btn-ghost" href="{sec_href}">{secondary}</a></div>
   </div>
   <div class="cross"><p>{cross_q}</p><a href="{cross_href}">{cross_link} {ic("arrow")}</a></div>
 </div></section>'''
@@ -159,7 +162,7 @@ def personal():
     <span class="overline accent">floow · para você</span>
     <h1>Finanças no automático. Sua mente em <em>estado de flow</em>.</h1>
     <p class="lead">O floow organiza suas contas, separa cada gasto por categoria e avisa o que vem a seguir. Você respira tranquilo e sabe exatamente para onde vai o seu dinheiro.</p>
-    <div class="hero-ctas"><a class="btn btn-primary" href="#comecar">Começar agora {ic("arrow")}</a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
+    <div class="hero-ctas"><a class="btn btn-primary" href="{APP_SIGNUP}">Começar agora {ic("arrow")}</a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
     <div class="hero-notes"><span>{ic("check")}Categorização automática</span><span>{ic("check")}Avisos no WhatsApp</span><span>{ic("check")}Sem planilha</span></div>
   </div>
   {hero_art([
