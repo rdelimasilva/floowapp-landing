@@ -139,7 +139,7 @@ def footer(current):
     return f'''<footer><div class="wrap">
   {logo("inst")}
   <nav aria-label="Rodapé"><a href="index.html">Para você</a><a href="empresas.html">Para empresas <span class="soon">Em breve</span></a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a></nav>
-  <div class="legal"><span>© 2026 floow · Limm Consultoria Ltda</span><span>floowapp.com.br</span></div>
+  <div class="legal"><span>© 2026 floow é um produto de Limm Consultoria Ltda · CNPJ 54.791.649/0001-05</span><span>floowapp.com.br</span></div>
 </div></footer>'''
 
 # ---------------------------------------------------------------- PERSONAL
