@@ -76,6 +76,7 @@ def head(title, desc, full, path=""):
     return top + f'''<title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="https://floowapp.com.br/{path}">
+<meta property="fb:app_id" content="927513703563892">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="floow">
 <meta property="og:locale" content="pt_BR">
