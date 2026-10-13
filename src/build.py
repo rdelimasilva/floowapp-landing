@@ -71,10 +71,22 @@ def hero_art(chips):
   <span class="flow-label">Estado de flow</span>{c}
 </div>'''
 
-def head(title, desc, full):
+def head(title, desc, full, path=""):
     top = '<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' if full else ''
     return top + f'''<title>{title}</title>
 <meta name="description" content="{desc}">
+<link rel="canonical" href="https://floowapp.com.br/{path}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="floow">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://floowapp.com.br/{path}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:image" content="https://floowapp.com.br/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="floow">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="{CSS}">
@@ -151,7 +163,7 @@ def personal():
     brl = lambda v: f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     cat_html = "".join(f'<div class="cat"><b>{n}</b><span class="v num">{brl(v)}</span><div class="bar"><i style="width:{v/mx*100:.1f}%;--c:{c}"></i></div></div>' for n, v, c in cats)
     total = sum(v for _, v, _ in cats)
-    return f'''{head("floow para você", "floow: suas finanças no automático e você em estado de flow.", DEPLOY)}
+    return f'''{head("floow para você", "floow: suas finanças no automático e você em estado de flow.", DEPLOY, "")}
 {"<body>" if DEPLOY else ""}
 <div class="personal" id="topo">
 {SPRITE}
@@ -269,7 +281,7 @@ def cash_chart():
 </svg>'''
 
 def business():
-    return f'''{head("floow para empresas", "floow para empresas: o caixa da sua empresa no automático, com previsibilidade.", True)}
+    return f'''{head("floow para empresas", "floow para empresas: o caixa da sua empresa no automático, com previsibilidade.", True, "empresas")}
 <body>
 <div class="business" id="topo">
 {SPRITE}
