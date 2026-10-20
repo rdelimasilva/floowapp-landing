@@ -94,7 +94,7 @@ def head(title, desc, full, path=""):
 <link rel="stylesheet" href="{CSS}">
 ''' + ('<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>\n</head>\n' if full else '')
 
-APP_LOGIN = "https://app.floowapp.com.br/auth"
+APP_LOGIN = "https://app.floowapp.com.br/dashboard"  # logado entra direto; deslogado o app manda para /auth
 APP_SIGNUP = "https://app.floowapp.com.br/auth?tab=signup"
 
 def nav(current, links, cta):
