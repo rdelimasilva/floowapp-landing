@@ -2,7 +2,7 @@
 """Gera index.html (Personal) e empresas.html (Business) com partes compartilhadas."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from beneficios import beneficios
+import pagina_voce
 DEPLOY = "--deploy" in sys.argv
 OUT = os.path.dirname(os.path.abspath(__file__))
 
@@ -129,126 +129,11 @@ def footer(current):
 # ---------------------------------------------------------------- PERSONAL
 END_DOC = "</body>\n</html>" if DEPLOY else ""
 def personal():
-    cats = [("Casa", 2150.00, "var(--indigo)"), ("Mercado", 1184.20, "var(--coral)"),
-            ("Lazer", 480.00, "var(--gold)"), ("Transporte", 316.90, "var(--teal)"), ("Assinaturas", 139.70, "#5B6B80")]
-    mx = cats[0][1]
-    brl = lambda v: f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-    cat_html = "".join(f'<div class="cat"><b>{n}</b><span class="v num">{brl(v)}</span><div class="bar"><i style="width:{v/mx*100:.1f}%;--c:{c}"></i></div></div>' for n, v, c in cats)
-    total = sum(v for _, v, _ in cats)
-    return f'''{head("floow para você", "floow: suas finanças no automático e você em estado de flow.", DEPLOY, "")}
+    return f'''{head("floow: saiba para onde vai cada real, sem lançar nada à mão", "App de controle financeiro com Open Finance: importa conta e cartão, categoriza os gastos, acompanha dívidas e investimentos e avisa no WhatsApp. 30 dias do Pro grátis.", DEPLOY, "")}
 {"<body>" if DEPLOY else ""}
 <div class="personal" id="topo">
 {SPRITE}
-{nav("p", "Começar agora")}
-<main>
-<section class="hero"><div class="wrap">
-  <div class="hero-copy">
-    
-    <h1>Finanças no automático. Sua mente em <em>estado de flow</em>.</h1>
-    <p class="lead">O floow organiza suas contas, separa cada gasto por categoria e avisa o que vem a seguir. Quando surgir uma dúvida, o consultor financeiro de IA responde.</p>
-    <div class="hero-ctas"><a class="btn btn-primary" href="{APP_SIGNUP}">Começar agora {ic("arrow")}</a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
-  </div>
-  {hero_art([
-    ("c1","pos","check",'<strong>Conta de luz paga</strong><span class="num">No automático · R$ 186,40</span>'),
-    ("c2","acc","pie",'Você gastou <strong style="display:inline" class="num">R$ 316,90</strong> em transporte neste mês.'),
-    ("c3","warn","bell",'<strong>Fatura vence dia 10</strong>Avisamos 3 dias antes.'),
-  ])}
-</div></section>
-
-<section class="block" id="beneficios"><div class="wrap">
-  <div class="sec-head"><h2>Do extrato ao patrimônio, num app só.</h2><p>Conta corrente, cartão, dívidas, investimentos e bens. O floow junta tudo e mantém atualizado.</p></div>
-  {beneficios()}
-</div></section>
-
-<section class="block band" id="como"><div class="wrap">
-  <div class="sec-head"><h2>Um mês inteiro rodando sozinho.</h2><p>Você segue a vida. O floow acompanha cada entrada e cada saída, e só chama sua atenção quando vale a pena.</p></div>
-  {timeline([
-    ("1","Dia 1","O salário entra","O floow reconhece a entrada e já separa o que tem destino certo: aluguel, contas fixas e assinaturas."),
-    ("5","Dia 5","Contas fixas em dia","Aluguel, luz e internet aparecem agendadas, com data e valor. Nada vence sem você saber."),
-    ("15","Dia 15","Aviso de ritmo","No meio do mês, chega no seu WhatsApp como estão os gastos em relação ao mês anterior."),
-    ("30","Dia 30","Resumo do mês","O resumo mostra quanto entrou, quanto saiu e para onde foi o dinheiro."),
-  ])}
-</div></section>
-
-<section class="block" id="clareza"><div class="wrap split">
-  <div>
-    
-    <h2>Você sabe para onde vai cada real.</h2>
-    <p class="lead">Saldo, gastos do mês por categoria e o que está agendado, numa tela só.</p>
-    {bullets([
-      ("pie","Gastos por categoria","Quanto foi para casa, mercado, transporte e lazer em cada mês."),
-      ("repeat","Recorrências identificadas","Assinaturas e contas fixas aparecem com data e valor de cada mês."),
-    ])}
-  </div>
-  <div>
-    <div class="phone" role="img" aria-label="Tela do floow no navegador do celular, com saldo e gastos de setembro por categoria">
-      <div class="phone-screen">
-        <div class="ph-browser"><span class="ph-aa">AA</span><div class="ph-url">{ic("lock")}<span>floowapp.com.br</span></div><span class="ph-reload">{ic("repeat")}</span></div><div class="ph-head">{logo()}</div>
-        <div class="ph-card"><div class="ph-label">Saldo da Conta</div><div class="ph-big num">R$ 12.480,35</div><div class="ph-sub">+ 3,2% neste mês</div></div>
-        <div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px"><b style="color:var(--fg-1);font-size:14px">Setembro por categoria</b><span class="num" style="font-size:12px;color:var(--fg-3)">R$ {brl(total)}</span></div>{cat_html}</div>
-        <div class="ph-card" style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><div><b style="color:var(--fg-1);font-weight:500">Internet</b><div class="ph-label">Agendado · amanhã</div></div><span class="num" style="color:var(--fg-1);font-weight:600">− 119,90</span></div>
-        <div class="example-tag">Dados de exemplo</div>
-      </div>
-      <div class="ph-toolbar" aria-hidden="true"><span>‹</span><span>›</span><span>□</span><span>⋯</span></div>
-    </div>
-  </div>
-</div></section>
-
-<section class="block band" id="avisos"><div class="wrap split rev">
-  <div>
-    
-    <h2>O floow fala com você no WhatsApp.</h2>
-    <p class="lead">Você não precisa abrir o floow. Chega um resumo curto ao longo do mês e um aviso quando algo pede atenção.</p>
-    {bullets([
-      ("bell","Aviso de ritmo","Se os gastos de uma categoria aceleram, você fica sabendo antes do fim do mês."),
-      ("cal","Vencimentos","Contas e faturas lembradas com antecedência, com valor e data."),
-    ])}
-  </div>
-  <div>{chat("Avisos automáticos", [
-      ('<b>Resumo de ritmo · semana 3</b><div class="kv num"><span>Gastos até agora</span><span>R$ 3.912,40</span><span>Ritmo do mês</span><span>Dentro do esperado</span><span>Maior categoria</span><span>Mercado</span></div>', "08:02"),
-      ('Você gastou <b class="num">R$ 316,90</b> em transporte neste mês. É 12% a mais que em agosto.', "08:02"),
-      ('A fatura do cartão vence dia 10. Total de <b class="num">R$ 1.842,30</b>. Avisamos de novo na véspera.', "09:15"),
-  ])}</div>
-</div></section>
-
-<section class="block" id="consultor"><div class="wrap split">
-  <div>
-    <h2>Um consultor financeiro de IA que conhece os seus números.</h2>
-    <p class="lead">Pergunte no app ou no WhatsApp. Ele responde com base nas suas contas, e todo dia aponta o que mudou.</p>
-    {bullets([
-      ("","Análises diárias","Gastos fora do padrão, metas em risco e oportunidades, calculados a partir dos seus dados."),
-      ("","Respostas diretas","Pergunte quanto sobrou no mês ou se dá para antecipar uma meta. A resposta começa pelo número."),
-      ("","Você confirma","Ações sugeridas pelo consultor só acontecem depois que você confirma."),
-    ])}
-  </div>
-  <div>{chat("Consultor financeiro", [
-      ("Quanto gastei com delivery este mês?", "19:40", True),
-      ('<b class="num">R$ 412,60</b> em 9 pedidos. É 18% a mais que em agosto.', "19:40"),
-      ("E a reserva de emergência, está no ritmo?", "19:41", True),
-      ('Faltam <b class="num">R$ 1.200,00</b> para a meta de fevereiro. Guardando <b class="num">R$ 400,00</b> por mês, você chega lá.', "19:41"),
-  ], "Exemplo de conversa com o consultor financeiro do floow")}</div>
-</div></section>
-
-<section class="block" id="seguranca"><div class="wrap">
-  <div class="sec-head"><h2>Como o floow cuida dos seus dados.</h2></div>
-  {SAFE}
-</div></section>
-
-<section class="block band" id="perguntas"><div class="wrap">
-  <div class="sec-head"><h2>O que as pessoas perguntam.</h2></div>
-  {faq([
-    ("Preciso preencher planilha?","Não. O floow organiza e categoriza os lançamentos sozinho. Você só ajusta uma categoria se quiser."),
-    ("Como funcionam os avisos no WhatsApp?","Você autoriza o seu número na sua conta floow e passa a receber o resumo de ritmo e os avisos de vencimento. Dá para desligar a qualquer momento."),
-    ("O consultor de IA mexe no meu dinheiro?","Ele analisa os seus dados e responde perguntas. Quando sugere uma ação, nada acontece até você confirmar."),
-    ("O floow vai me cobrar disciplina?","Não. Ele mostra o que aconteceu e o que vem a seguir. As decisões continuam sendo suas."),
-    ('Tenho uma empresa. Posso usar o floow?','Em breve. O <a href="empresas.html" style="color:var(--accent-ink);font-weight:600">floow para empresas</a> vai ter fluxo de caixa, contas a pagar, recebíveis e conciliação em um painel só.'),
-  ])}
-</div></section>
-
-{cta_final("Respire. O floow cuida do resto.", "Crie sua conta em poucos minutos e veja o seu mês organizado.", "Começar agora", "Ver como funciona", "#como",
-           "Em breve: o caixa da sua empresa também no automático.", "Conheça o floow para empresas", "empresas.html")}
-</main>
-{footer("p")}
+{pagina_voce.pagina(logo("inst"), chat, faq, footer("p"))}
 </div>
 {END_DOC}'''
 
