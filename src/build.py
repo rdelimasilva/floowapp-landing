@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Gera index.html (Personal) e empresas.html (Business) com partes compartilhadas."""
 import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from beneficios import beneficios
 DEPLOY = "--deploy" in sys.argv
 OUT = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,34 +30,6 @@ SPRITE = '''<svg width="0" height="0" style="position:absolute" aria-hidden="tru
 
 def ic(name): return f'<svg aria-hidden="true"><use href="#i-{name}"/></svg>'
 
-WOMAN = '''<svg class="woman" viewBox="0 0 400 420" role="img" aria-label="Mulher sentada em posição de meditação, de frente, com os olhos fechados">
-  <ellipse cx="200" cy="398" rx="170" ry="14" fill="var(--mat)"/>
-  <path d="M158 116 C156 72 244 72 242 116 L248 176 C232 188 168 188 152 176 Z" fill="var(--hair-c)"/>
-  <path d="M146 206 C126 250 118 292 112 330" stroke="var(--skin)" stroke-width="21" stroke-linecap="round" fill="none"/>
-  <path d="M254 206 C274 250 282 292 288 330" stroke="var(--skin)" stroke-width="21" stroke-linecap="round" fill="none"/>
-  <rect x="189" y="146" width="22" height="34" rx="9" fill="var(--skin-shade)"/>
-  <g class="chest">
-    <path d="M200 172 C167 172 146 180 138 204 L158 306 L242 306 L262 204 C254 180 233 172 200 172 Z" fill="var(--top)"/>
-    <path d="M184 173 Q200 194 216 173 Z" fill="var(--skin-shade)"/>
-    <path d="M146 206 C138 226 134 240 131 256" stroke="var(--top)" stroke-width="25" stroke-linecap="round" fill="none"/>
-    <path d="M254 206 C262 226 266 240 269 256" stroke="var(--top)" stroke-width="25" stroke-linecap="round" fill="none"/>
-    <path d="M160 296 H240" stroke="var(--top-shade)" stroke-width="12" stroke-linecap="round"/>
-  </g>
-  <ellipse cx="200" cy="118" rx="30" ry="35" fill="var(--skin)"/>
-  <path d="M168 120 C164 84 236 84 232 120 C228 101 214 92 200 92 C186 92 172 101 168 120 Z" fill="var(--hair-c)"/>
-  <circle cx="200" cy="70" r="15" fill="var(--hair-c)"/>
-  <path d="M181 123 Q187.5 128.5 194 123 M206 123 Q212.5 128.5 219 123" stroke="var(--hair-c)" stroke-width="2.3" stroke-linecap="round" fill="none"/>
-  <path d="M194 139 Q200 143 206 139" stroke="#8A4B3A" stroke-width="2" stroke-linecap="round" fill="none"/>
-  <circle cx="181" cy="133" r="5" fill="#E8574A" opacity=".18"/><circle cx="219" cy="133" r="5" fill="#E8574A" opacity=".18"/>
-  <path d="M76 356 C76 320 140 300 200 307 C260 300 324 320 324 356 C324 386 262 398 200 394 C138 398 76 386 76 356 Z" fill="var(--pants)"/>
-  <path d="M112 356 C150 342 250 342 288 356" stroke="var(--pants-fold)" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M200 312 V340" stroke="var(--pants-fold)" stroke-width="3" stroke-linecap="round"/>
-  <ellipse cx="160" cy="358" rx="20" ry="8" transform="rotate(-8 160 358)" fill="var(--skin)"/>
-  <ellipse cx="240" cy="358" rx="20" ry="8" transform="rotate(8 240 358)" fill="var(--skin)"/>
-  <circle cx="110" cy="334" r="12" fill="var(--skin)"/><circle cx="290" cy="334" r="12" fill="var(--skin)"/>
-  <circle cx="104" cy="330" r="4.2" fill="none" stroke="var(--skin-shade)" stroke-width="2"/><circle cx="296" cy="330" r="4.2" fill="none" stroke="var(--skin-shade)" stroke-width="2"/>
-</svg>'''
-
 RINGS = '''<svg class="rings" viewBox="0 0 500 510" aria-hidden="true">
   <circle class="r4" cx="250" cy="250" r="244"/>
   <circle class="r3" cx="250" cy="250" r="210"/>
@@ -67,8 +41,7 @@ def hero_art(chips):
     c = "".join(f'<div class="chip {cls}"><span class="ico {tone}">{ic(icon)}</span><div>{body}</div></div>'
                 for cls, tone, icon, body in chips)
     return f'''<div class="hero-art">
-  <div class="disc"></div>{RINGS}{WOMAN}
-  <span class="flow-label">Estado de flow</span>{c}
+  {RINGS}<div class="stack">{c}</div>
 </div>'''
 
 def head(title, desc, full, path=""):
@@ -91,19 +64,17 @@ def head(title, desc, full, path=""):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" href="{CSS}">
+<link rel="stylesheet" href="{CSS}?v={CSS_V}">
 ''' + ('<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>\n</head>\n' if full else '')
 
 APP_LOGIN = "https://app.floowapp.com.br/dashboard"  # logado entra direto; deslogado o app manda para /auth
 APP_SIGNUP = "https://app.floowapp.com.br/auth?tab=signup"
 
-def nav(current, links, cta):
+def nav(current, cta):
     you = 'aria-current="page"' if current == "p" else ''
     biz = 'aria-current="page"' if current == "b" else ''
-    lk = "".join(f'<a href="#{h}">{t}</a>' for h, t in links)
     return f'''<header class="nav"><div class="wrap">
   <a href="{'#topo' if current=='p' else 'index.html'}" style="text-decoration:none">{logo("inst")}</a>
-  <nav class="nav-links" aria-label="Seções">{lk}</nav>
   <div class="nav-end">
     <nav class="line-switch" aria-label="Escolha o floow">
       <a href="index.html" {you}>Para você</a><a href="empresas.html" {biz}>Para empresas <span class="soon">Em breve</span></a>
@@ -114,27 +85,26 @@ def nav(current, links, cta):
 
 def timeline(items):
     out = []
-    for dot, when, title, text, tag in items:
-        t = f'<span class="tl-tag">{tag}</span>' if tag else ''
-        out.append(f'<div class="tl-item"><div class="tl-dot num">{dot}</div><div class="tl-when">{when}</div><h3>{title}</h3><p>{text}</p>{t}</div>')
+    for dot, when, title, text in items:
+        out.append(f'<div class="tl-item"><div class="tl-dot num">{dot}</div><div class="tl-when">{when}</div><h3>{title}</h3><p>{text}</p></div>')
     return '<div class="timeline">' + "".join(out) + '</div>'
 
 def bullets(items):
     return '<ul class="bullets">' + "".join(
-        f'<li><span class="ico">{ic(i)}</span><div><strong>{t}</strong><span>{d}</span></div></li>' for i, t, d in items) + '</ul>'
+        f'<li><strong>{t}</strong><span>{d}</span></li>' for _, t, d in items) + '</ul>'
 
-def chat(title, msgs):
-    m = "".join(f'<div class="msg">{b}<time>{t}</time></div>' for b, t in msgs)
-    return f'''<div class="chat" role="img" aria-label="Exemplo de mensagens do floow no WhatsApp">
+def chat(title, msgs, label="Exemplo de mensagens do floow no WhatsApp"):
+    m = "".join(f'<div class="msg{" me" if me else ""}">{b}<time>{t}</time></div>' for b, t, *me in msgs)
+    return f'''<div class="chat" role="img" aria-label="{label}">
   <div class="chat-top"><span class="chat-av"><svg {RING_VB}><circle cx="16.9" cy="21" r="12.6" stroke="var(--ring-2)"/><circle cx="52.5" cy="21" r="12.6" stroke="var(--ring-2)"/></svg></span>
   <div><b>floow</b><small>{title}</small></div></div>
   <div class="chat-body">{m}</div>
 </div>'''
 
 SAFE = f'''<div class="safe">
-  <div>{ic("lock")}<h3>Dados criptografados</h3><p>Suas informações trafegam e ficam guardadas com criptografia.</p></div>
-  <div>{ic("toggle")}<h3>Você decide o que conectar</h3><p>Conecte e desconecte contas quando quiser. Os avisos também desligam com um toque.</p></div>
-  <div>{ic("shield")}<h3>Sem venda de dados</h3><p>O floow existe para organizar o seu dinheiro. Seus dados não são produto.</p></div>
+  <div><h3>Dados criptografados</h3><p>Suas informações trafegam e ficam guardadas com criptografia.</p></div>
+  <div><h3>Você decide o que conectar</h3><p>Conecte e desconecte contas quando quiser. Os avisos também desligam com um toque.</p></div>
+  <div><h3>Sem venda de dados</h3><p>O floow existe para organizar o seu dinheiro. Seus dados não são produto.</p></div>
 </div>'''
 
 def faq(items):
@@ -152,7 +122,7 @@ def cta_final(h, p, primary, secondary, sec_href, cross_q, cross_link, cross_hre
 def footer(current):
     return f'''<footer><div class="wrap">
   {logo("inst")}
-  <nav aria-label="Rodapé"><a href="index.html">Para você</a><a href="empresas.html">Para empresas <span class="soon">Em breve</span></a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a></nav>
+  <nav aria-label="Rodapé"><a href="index.html">Para você</a><a href="empresas.html">Para empresas <span class="soon">Em breve</span></a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a><a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0Ephsv8Jv0DgBZVyCJqbiw43nROISdlNaWM5169" target="_blank" rel="noopener">Termos de uso</a><a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0EpAU9DW8RhSxw3gPMbItTCvVo7XrqpzjGAYEai" target="_blank" rel="noopener">Política de privacidade</a></nav>
   <div class="legal"><span>© 2026 floow é um produto de Limm Consultoria Ltda · CNPJ 54.791.649/0001-05</span><span>floowapp.com.br</span></div>
 </div></footer>'''
 
@@ -169,15 +139,14 @@ def personal():
 {"<body>" if DEPLOY else ""}
 <div class="personal" id="topo">
 {SPRITE}
-{nav("p", [("como","Como funciona"),("recursos","Recursos"),("avisos","Avisos"),("seguranca","Segurança"),("perguntas","Perguntas")], "Começar agora")}
+{nav("p", "Começar agora")}
 <main>
 <section class="hero"><div class="wrap">
   <div class="hero-copy">
-    <span class="overline accent">floow · para você</span>
+    
     <h1>Finanças no automático. Sua mente em <em>estado de flow</em>.</h1>
-    <p class="lead">O floow organiza suas contas, separa cada gasto por categoria e avisa o que vem a seguir. Você respira tranquilo e sabe exatamente para onde vai o seu dinheiro.</p>
+    <p class="lead">O floow organiza suas contas, separa cada gasto por categoria e avisa o que vem a seguir. Quando surgir uma dúvida, o consultor financeiro de IA responde.</p>
     <div class="hero-ctas"><a class="btn btn-primary" href="{APP_SIGNUP}">Começar agora {ic("arrow")}</a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
-    <div class="hero-notes"><span>{ic("check")}Categorização automática</span><span>{ic("check")}Avisos no WhatsApp</span><span>{ic("check")}Sem planilha</span></div>
   </div>
   {hero_art([
     ("c1","pos","check",'<strong>Conta de luz paga</strong><span class="num">No automático · R$ 186,40</span>'),
@@ -186,25 +155,29 @@ def personal():
   ])}
 </div></section>
 
+<section class="block" id="beneficios"><div class="wrap">
+  <div class="sec-head"><h2>Do extrato ao patrimônio, num app só.</h2><p>Conta corrente, cartão, dívidas, investimentos e bens. O floow junta tudo e mantém atualizado.</p></div>
+  {beneficios()}
+</div></section>
+
 <section class="block band" id="como"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Como funciona</span><h2>Um mês inteiro rodando sozinho.</h2><p>Você segue a vida. O floow acompanha cada entrada e cada saída, e só chama sua atenção quando vale a pena.</p></div>
+  <div class="sec-head"><h2>Um mês inteiro rodando sozinho.</h2><p>Você segue a vida. O floow acompanha cada entrada e cada saída, e só chama sua atenção quando vale a pena.</p></div>
   {timeline([
-    ("1","Dia 1","O salário entra","O floow reconhece a entrada e já separa o que tem destino certo: aluguel, contas fixas e assinaturas.","Automático"),
-    ("5","Dia 5","Contas fixas em dia","Aluguel, luz e internet aparecem agendadas, com data e valor. Nada vence sem você saber.","Automático"),
-    ("15","Dia 15","Aviso de ritmo","No meio do mês, chega no seu WhatsApp como estão os gastos em relação ao mês anterior.",""),
-    ("30","Dia 30","Resumo do mês","Quanto entrou, quanto saiu e para onde foi. Um retrato simples, sem planilha.",""),
+    ("1","Dia 1","O salário entra","O floow reconhece a entrada e já separa o que tem destino certo: aluguel, contas fixas e assinaturas."),
+    ("5","Dia 5","Contas fixas em dia","Aluguel, luz e internet aparecem agendadas, com data e valor. Nada vence sem você saber."),
+    ("15","Dia 15","Aviso de ritmo","No meio do mês, chega no seu WhatsApp como estão os gastos em relação ao mês anterior."),
+    ("30","Dia 30","Resumo do mês","O resumo mostra quanto entrou, quanto saiu e para onde foi o dinheiro."),
   ])}
 </div></section>
 
-<section class="block" id="recursos"><div class="wrap split">
+<section class="block" id="clareza"><div class="wrap split">
   <div>
-    <span class="overline accent">Clareza</span>
-    <h2 style="margin-top:14px">Você sabe para onde vai cada real.</h2>
-    <p class="lead" style="margin-top:16px">Tudo o que você gasta ganha nome e lugar. Sem digitar, sem categorizar na mão.</p>
+    
+    <h2>Você sabe para onde vai cada real.</h2>
+    <p class="lead">Saldo, gastos do mês por categoria e o que está agendado, numa tela só.</p>
     {bullets([
-      ("pie","Categorias automáticas","Mercado, transporte, casa, lazer. Cada gasto encontra o seu lugar sozinho."),
-      ("repeat","Recorrências sob controle","Assinaturas e contas fixas identificadas, com data e valor de cada mês."),
-      ("wallet","Tudo em um só lugar","Contas e cartões juntos em uma visão, com o saldo sempre atualizado."),
+      ("pie","Gastos por categoria","Quanto foi para casa, mercado, transporte e lazer em cada mês."),
+      ("repeat","Recorrências identificadas","Assinaturas e contas fixas aparecem com data e valor de cada mês."),
     ])}
   </div>
   <div>
@@ -223,9 +196,9 @@ def personal():
 
 <section class="block band" id="avisos"><div class="wrap split rev">
   <div>
-    <span class="overline accent">Avisos</span>
-    <h2 style="margin-top:14px">O floow fala com você no WhatsApp.</h2>
-    <p class="lead" style="margin-top:16px">Sem precisar abrir o floow. Um resumo curto no ritmo do seu mês e um aviso quando algo pede atenção.</p>
+    
+    <h2>O floow fala com você no WhatsApp.</h2>
+    <p class="lead">Você não precisa abrir o floow. Chega um resumo curto ao longo do mês e um aviso quando algo pede atenção.</p>
     {bullets([
       ("bell","Aviso de ritmo","Se os gastos de uma categoria aceleram, você fica sabendo antes do fim do mês."),
       ("cal","Vencimentos","Contas e faturas lembradas com antecedência, com valor e data."),
@@ -238,16 +211,35 @@ def personal():
   ])}</div>
 </div></section>
 
+<section class="block" id="consultor"><div class="wrap split">
+  <div>
+    <h2>Um consultor financeiro de IA que conhece os seus números.</h2>
+    <p class="lead">Pergunte no app ou no WhatsApp. Ele responde com base nas suas contas, e todo dia aponta o que mudou.</p>
+    {bullets([
+      ("","Análises diárias","Gastos fora do padrão, metas em risco e oportunidades, calculados a partir dos seus dados."),
+      ("","Respostas diretas","Pergunte quanto sobrou no mês ou se dá para antecipar uma meta. A resposta começa pelo número."),
+      ("","Você confirma","Ações sugeridas pelo consultor só acontecem depois que você confirma."),
+    ])}
+  </div>
+  <div>{chat("Consultor financeiro", [
+      ("Quanto gastei com delivery este mês?", "19:40", True),
+      ('<b class="num">R$ 412,60</b> em 9 pedidos. É 18% a mais que em agosto.', "19:40"),
+      ("E a reserva de emergência, está no ritmo?", "19:41", True),
+      ('Faltam <b class="num">R$ 1.200,00</b> para a meta de fevereiro. Guardando <b class="num">R$ 400,00</b> por mês, você chega lá.', "19:41"),
+  ], "Exemplo de conversa com o consultor financeiro do floow")}</div>
+</div></section>
+
 <section class="block" id="seguranca"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Segurança</span><h2>Tranquilidade começa pela confiança.</h2></div>
+  <div class="sec-head"><h2>Como o floow cuida dos seus dados.</h2></div>
   {SAFE}
 </div></section>
 
 <section class="block band" id="perguntas"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Perguntas</span><h2>O que as pessoas perguntam.</h2></div>
+  <div class="sec-head"><h2>O que as pessoas perguntam.</h2></div>
   {faq([
     ("Preciso preencher planilha?","Não. O floow organiza e categoriza os lançamentos sozinho. Você só ajusta uma categoria se quiser."),
     ("Como funcionam os avisos no WhatsApp?","Você autoriza o seu número na sua conta floow e passa a receber o resumo de ritmo e os avisos de vencimento. Dá para desligar a qualquer momento."),
+    ("O consultor de IA mexe no meu dinheiro?","Ele analisa os seus dados e responde perguntas. Quando sugere uma ação, nada acontece até você confirmar."),
     ("O floow vai me cobrar disciplina?","Não. Ele mostra o que aconteceu e o que vem a seguir. As decisões continuam sendo suas."),
     ('Tenho uma empresa. Posso usar o floow?','Em breve. O <a href="empresas.html" style="color:var(--accent-ink);font-weight:600">floow para empresas</a> vai ter fluxo de caixa, contas a pagar, recebíveis e conciliação em um painel só.'),
   ])}
@@ -287,16 +279,14 @@ def business():
 <body>
 <div class="business" id="topo">
 {SPRITE}
-{nav("b", [("painel","Painel"),("rotina","Rotina"),("recursos","Recursos"),("seguranca","Segurança"),("perguntas","Perguntas")], "")}
+{nav("b", "")}
 <main>
 <section class="hero"><div class="wrap">
   <div class="hero-copy">
-    <span class="overline accent">floow · para empresas <span class="soon">Em breve</span></span>
     <h1>Finanças no automático. Sua mente em <em>estado de flow</em>.</h1>
-    <p class="lead">Contas a pagar, recebíveis e conciliação rodando sozinhos. Você sabe hoje quanto entra, quanto sai e por quantos dias o caixa se sustenta.</p>
+    <p class="lead">O floow cuida de contas a pagar, recebíveis e conciliação. Você sabe hoje quanto entra, quanto sai e por quantos dias o caixa se sustenta.</p>
     <div class="hero-ctas"><span class="btn btn-disabled" aria-disabled="true">Em breve</span><a class="btn btn-ghost" href="index.html">Conhecer o floow para você</a></div>
     <p class="soon-note">O floow para empresas ainda não está aberto para cadastro ou login.</p>
-    <div class="hero-notes"><span>{ic("check")}Conciliação automática</span><span>{ic("check")}Previsão de caixa</span><span>{ic("check")}Avisos no WhatsApp</span></div>
   </div>
   {hero_art([
     ("c1","pos","check",'<strong>Conciliação concluída</strong><span class="num">128 de 128 lançamentos</span>'),
@@ -306,7 +296,7 @@ def business():
 </div></section>
 
 <section class="block band" id="painel"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Previsibilidade</span><h2>Prazo, valor e consequência na mesma tela.</h2><p>O painel mostra o caixa de hoje, o que entra e sai nos próximos dias e até quando o saldo sustenta a operação.</p></div>
+  <div class="sec-head"><h2>O caixa de hoje e dos próximos 30 dias na mesma tela.</h2><p>O painel mostra o caixa de hoje, o que entra e sai nos próximos dias e até quando o saldo sustenta a operação.</p></div>
   <div class="dash">
     <div class="dash-top">{logo()}<a class="on" href="#painel">Fluxo de Caixa</a><a href="#recursos">Contas a Pagar</a><a href="#recursos">Recebíveis</a><a href="#recursos">Conciliação</a><span class="example-tag" style="margin-left:auto">Dados de exemplo</span></div>
     <div class="dash-body">
@@ -335,30 +325,30 @@ def business():
 </div></section>
 
 <section class="block" id="rotina"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Rotina</span><h2>Uma semana de caixa sem sustos.</h2><p>O trabalho repetitivo roda sozinho. Você entra só para decidir.</p></div>
+  <div class="sec-head"><h2>Uma semana de caixa sem sustos.</h2><p>O trabalho repetitivo roda sozinho. Você entra só para decidir.</p></div>
   {timeline([
-    ("Seg","Segunda","Conciliação pronta","Os lançamentos do fim de semana chegam conciliados com o extrato. Você revisa só as exceções.","Automático"),
-    ("Ter","Terça","Recebível confirmado","O cliente pagou o boleto. O floow baixa o título e atualiza a previsão de caixa.","Automático"),
-    ("Qua","Quarta","Aviso de vencimentos","Três boletos vencem sexta. Total de R$ 8.240,00. Você decide com dois dias de folga.",""),
-    ("Sex","Sexta","Pagamentos no horário","O que foi aprovado sai no vencimento. Sem multa e sem correria no fim do dia.","Automático"),
+    ("Seg","Segunda","Conciliação pronta","Os lançamentos do fim de semana chegam conciliados com o extrato. Você revisa só as exceções."),
+    ("Ter","Terça","Recebível confirmado","O cliente pagou o boleto. O floow baixa o título e atualiza a previsão de caixa."),
+    ("Qua","Quarta","Aviso de vencimentos","Três boletos vencem sexta. Total de R$ 8.240,00. Você decide com dois dias de folga."),
+    ("Sex","Sexta","Pagamentos no horário","O que foi aprovado sai no vencimento, sem multa e sem correria no fim do dia."),
   ])}
 </div></section>
 
 <section class="block band" id="recursos"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Recursos</span><h2>Quatro rotinas do financeiro, um lugar só.</h2></div>
+  <div class="sec-head"><h2>Quatro rotinas do financeiro, um lugar só.</h2></div>
   <div class="feat-grid">
-    <div class="feat"><span class="ico">{ic("chart")}</span><h3>Fluxo de caixa</h3><p>Saldo de hoje e projeção dos próximos 30 dias, com base no que já está agendado.</p><div class="quote num">“Seu caixa cobre 47 dias no ritmo atual.”</div></div>
-    <div class="feat"><span class="ico">{ic("receipt")}</span><h3>Contas a pagar</h3><p>Boletos e fornecedores organizados por vencimento, com aprovação e agendamento.</p><div class="quote num">“Três boletos vencem sexta. Total de R$ 8.240,00.”</div></div>
-    <div class="feat"><span class="ico">{ic("in")}</span><h3>Recebíveis</h3><p>Quem vai pagar, quanto e quando. Títulos baixados sozinhos quando o dinheiro cai.</p><div class="quote num">“R$ 62.900,00 entram nos próximos 7 dias.”</div></div>
-    <div class="feat"><span class="ico">{ic("compare")}</span><h3>Conciliação</h3><p>Extrato cruzado com o que foi lançado. O que bate é conciliado; o resto vira uma lista curta.</p><div class="quote num">“128 lançamentos conciliados hoje. 2 pedem revisão.”</div></div>
+    <div class="feat"><h3>Fluxo de caixa</h3><p>Saldo de hoje e projeção dos próximos 30 dias, com base no que já está agendado.</p><div class="quote num">“Seu caixa cobre 47 dias no ritmo atual.”</div></div>
+    <div class="feat"><h3>Contas a pagar</h3><p>Boletos e fornecedores organizados por vencimento, com aprovação e agendamento.</p><div class="quote num">“Três boletos vencem sexta. Total de R$ 8.240,00.”</div></div>
+    <div class="feat"><h3>Recebíveis</h3><p>Mostra quem vai pagar, quanto e quando, e baixa o título sozinho quando o dinheiro cai.</p><div class="quote num">“R$ 62.900,00 entram nos próximos 7 dias.”</div></div>
+    <div class="feat"><h3>Conciliação</h3><p>O floow cruza o extrato com o que foi lançado. O que bate é conciliado; o resto vira uma lista curta.</p><div class="quote num">“128 lançamentos conciliados hoje. 2 pedem revisão.”</div></div>
   </div>
 </div></section>
 
 <section class="block" id="avisos"><div class="wrap split">
   <div>
-    <span class="overline accent">Avisos</span>
-    <h2 style="margin-top:14px">O caixa do dia chega no seu WhatsApp.</h2>
-    <p class="lead" style="margin-top:16px">Todo dia de manhã, os números que importam. E um aviso sempre que uma decisão depende de você.</p>
+    
+    <h2>O caixa do dia chega no seu WhatsApp.</h2>
+    <p class="lead">Todo dia de manhã chegam o caixa e os vencimentos da semana, e um aviso sempre que uma decisão depende de você.</p>
     {bullets([
       ("bell","Resumo diário","Caixa de hoje, o que entra e sai na semana e a cobertura em dias."),
       ("cal","Vencimentos e aprovações","Prazo, valor e o que acontece se nada for feito, na mesma mensagem."),
@@ -372,12 +362,12 @@ def business():
 </div></section>
 
 <section class="block band" id="seguranca"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Segurança</span><h2>O caixa da empresa em boas mãos.</h2></div>
+  <div class="sec-head"><h2>Como o floow cuida dos dados da empresa.</h2></div>
   {SAFE}
 </div></section>
 
 <section class="block" id="perguntas"><div class="wrap">
-  <div class="sec-head"><span class="overline accent">Perguntas</span><h2>O que as empresas perguntam.</h2></div>
+  <div class="sec-head"><h2>O que as empresas perguntam.</h2></div>
   {faq([
     ("O que é cobertura de caixa?","É por quantos dias o saldo de hoje, somado ao que entra e descontado o que sai, sustenta a operação no ritmo atual."),
     ("Como funciona a conciliação automática?","O floow cruza os lançamentos do extrato com as contas a pagar e a receber. O que bate é conciliado sozinho; o que não bate vai para uma lista curta de revisão."),
@@ -395,6 +385,8 @@ def business():
 </html>'''
 
 CSS = "floow.css" if DEPLOY else "floow-v4.css"
+# versão no link do CSS: sem ela o navegador junta HTML novo com CSS velho do cache
+import hashlib; CSS_V = hashlib.md5(open(os.path.join(OUT, "floow-v4.css"), "rb").read()).hexdigest()[:8]
 DEST = os.path.join(OUT, "dist") if DEPLOY else OUT
 os.makedirs(DEST, exist_ok=True)
 open(os.path.join(DEST, "index.html"), "w").write(personal())
