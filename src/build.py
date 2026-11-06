@@ -44,6 +44,15 @@ def hero_art(chips):
   {RINGS}<div class="stack">{c}</div>
 </div>'''
 
+CLARITY = '''<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "z96b4nrj9v");
+</script>
+'''
+
 def head(title, desc, full, path=""):
     top = '<!doctype html>\n<html lang="pt-BR">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' if full else ''
     return top + f'''<title>{title}</title>
@@ -65,7 +74,7 @@ def head(title, desc, full, path=""):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 <link rel="stylesheet" href="{CSS}?v={CSS_V}">
-''' + ('<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>\n</head>\n' if full else '')
+''' + CLARITY + ('<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>\n</head>\n' if full else '')
 
 APP_LOGIN = "https://app.floowapp.com.br/dashboard"  # logado entra direto; deslogado o app manda para /auth
 APP_SIGNUP = "https://app.floowapp.com.br/auth?tab=signup"
