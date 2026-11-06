@@ -55,7 +55,7 @@ def hero(chat):
   <div class="hero-top">
   <div class="hero-copy">
     <h1>Saiba para onde vai <em>cada real</em>, sem lançar nada à mão.</h1>
-    <p class="lead">Conecte seus bancos pelo Open Finance e o floow importa os lançamentos, separa cada gasto por categoria e avisa no WhatsApp o que vem a seguir.</p>
+    <p class="lead">Para quem tem conta e cartão em vários bancos e cansou de planilha. Conecte tudo pelo Open Finance: o floow importa os lançamentos, separa por categoria e avisa no WhatsApp o que vem a seguir.</p>
     <div class="hero-ctas"><a class="btn btn-primary" href="{SIGNUP}">Começar grátis</a><a class="btn btn-ghost" href="#como">Ver como funciona</a></div>
     <p class="hero-note">30 dias do Pro grátis, sem cartão de crédito.</p>
   </div>
