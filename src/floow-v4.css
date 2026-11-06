@@ -409,3 +409,12 @@ footer .legal { flex-basis: 100%; border-top: 1px solid var(--hair); padding-top
   .recursos { gap: 56px; }
   .nav-end .btn { display: inline-flex; }
 }
+
+/* Aviso de cookies (Clarity só carrega com "Aceitar") */
+.cookies { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 50; max-width: 720px; margin-inline: auto; display: flex; align-items: center; gap: 16px 24px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--hair); border-radius: 14px; box-shadow: var(--shadow-lg); font-size: 14px; color: var(--fg-2); }
+.cookies[hidden] { display: none; }
+.cookies a { color: var(--accent-ink); font-weight: 600; }
+.cookies-btns { display: flex; gap: 8px; flex: none; }
+.link-btn { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.link-btn:hover { color: var(--fg-1); }
+@media (max-width: 640px) { .cookies { flex-direction: column; align-items: stretch; } .cookies-btns .btn { flex: 1; } }

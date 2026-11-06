@@ -21,13 +21,33 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" href="floow.css?v=b91f585f">
-<script type="text/javascript">
+<link rel="stylesheet" href="floow.css?v=6e4413f9">
+<script>
+(function () {
+  var K = 'floow-cookies', v = null;
+  function carregar() {
+    if (window.clarity) return;
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "z96b4nrj9v");
+  }
+  try { v = localStorage.getItem(K); } catch (e) {}
+  if (v === 'aceito') carregar();
+  window.floowCookies = {
+    escolher: function (x) {
+      try { localStorage.setItem(K, x); } catch (e) {}
+      document.getElementById('cookies').hidden = true;
+      if (x === 'aceito') carregar();
+      else if (window.clarity) window.clarity('consent', false);
+    },
+    abrir: function () { document.getElementById('cookies').hidden = false; }
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    if (v !== 'aceito' && v !== 'recusado') document.getElementById('cookies').hidden = false;
+  });
+})();
 </script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 </head>
@@ -168,8 +188,13 @@
 <footer><div class="wrap">
   <span class="logo inst" aria-label="floow"><span>fl</span><svg viewBox="0.2 4.3 69 33.4" aria-hidden="true"><circle cx="16.9" cy="21" r="12.6"/><circle cx="52.5" cy="21" r="12.6"/></svg><span>w</span></span>
   <nav aria-label="Rodapé"><a href="index.html">Para você</a><a href="empresas.html">Para empresas <span class="soon">Em breve</span></a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a><a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0Ephsv8Jv0DgBZVyCJqbiw43nROISdlNaWM5169" target="_blank" rel="noopener">Termos de uso</a><a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0EpAU9DW8RhSxw3gPMbItTCvVo7XrqpzjGAYEai" target="_blank" rel="noopener">Política de privacidade</a></nav>
+  <button type="button" class="link-btn" onclick="floowCookies.abrir()">Preferências de cookies</button>
   <div class="legal"><span>© 2026 floow é um produto de Limm Consultoria Ltda · CNPJ 54.791.649/0001-05</span><span>floowapp.com.br</span></div>
 </div></footer>
+<div id="cookies" class="cookies" role="region" aria-label="Aviso de cookies" hidden>
+  <p>Usamos o Microsoft Clarity para entender como as pessoas usam esta página. Ele grava cookies e só é ativado se você aceitar. <a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0EpAU9DW8RhSxw3gPMbItTCvVo7XrqpzjGAYEai" target="_blank" rel="noopener">Política de privacidade</a></p>
+  <div class="cookies-btns"><button type="button" class="btn btn-ghost btn-sm" onclick="floowCookies.escolher('recusado')">Recusar</button><button type="button" class="btn btn-primary btn-sm" onclick="floowCookies.escolher('aceito')">Aceitar</button></div>
+</div>
 </div>
 </body>
 </html>

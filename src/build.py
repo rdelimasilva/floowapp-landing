@@ -44,12 +44,33 @@ def hero_art(chips):
   {RINGS}<div class="stack">{c}</div>
 </div>'''
 
-CLARITY = '''<script type="text/javascript">
+# Clarity só carrega depois do "Aceitar" no aviso de cookies (LGPD); a escolha fica no localStorage
+CLARITY = '''<script>
+(function () {
+  var K = 'floow-cookies', v = null;
+  function carregar() {
+    if (window.clarity) return;
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "z96b4nrj9v");
+  }
+  try { v = localStorage.getItem(K); } catch (e) {}
+  if (v === 'aceito') carregar();
+  window.floowCookies = {
+    escolher: function (x) {
+      try { localStorage.setItem(K, x); } catch (e) {}
+      document.getElementById('cookies').hidden = true;
+      if (x === 'aceito') carregar();
+      else if (window.clarity) window.clarity('consent', false);
+    },
+    abrir: function () { document.getElementById('cookies').hidden = false; }
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    if (v !== 'aceito' && v !== 'recusado') document.getElementById('cookies').hidden = false;
+  });
+})();
 </script>
 '''
 
@@ -132,8 +153,13 @@ def footer(current):
     return f'''<footer><div class="wrap">
   {logo("inst")}
   <nav aria-label="Rodapé"><a href="index.html">Para você</a><a href="empresas.html">Para empresas <span class="soon">Em breve</span></a><a href="#seguranca">Segurança</a><a href="#perguntas">Perguntas</a><a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0Ephsv8Jv0DgBZVyCJqbiw43nROISdlNaWM5169" target="_blank" rel="noopener">Termos de uso</a><a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0EpAU9DW8RhSxw3gPMbItTCvVo7XrqpzjGAYEai" target="_blank" rel="noopener">Política de privacidade</a></nav>
+  <button type="button" class="link-btn" onclick="floowCookies.abrir()">Preferências de cookies</button>
   <div class="legal"><span>© 2026 floow é um produto de Limm Consultoria Ltda · CNPJ 54.791.649/0001-05</span><span>floowapp.com.br</span></div>
-</div></footer>'''
+</div></footer>
+<div id="cookies" class="cookies" role="region" aria-label="Aviso de cookies" hidden>
+  <p>Usamos o Microsoft Clarity para entender como as pessoas usam esta página. Ele grava cookies e só é ativado se você aceitar. <a href="https://1780d9opbc.ufs.sh/f/26YWbAJJw0EpAU9DW8RhSxw3gPMbItTCvVo7XrqpzjGAYEai" target="_blank" rel="noopener">Política de privacidade</a></p>
+  <div class="cookies-btns"><button type="button" class="btn btn-ghost btn-sm" onclick="floowCookies.escolher('recusado')">Recusar</button><button type="button" class="btn btn-primary btn-sm" onclick="floowCookies.escolher('aceito')">Aceitar</button></div>
+</div>'''
 
 # ---------------------------------------------------------------- PERSONAL
 END_DOC = "</body>\n</html>" if DEPLOY else ""
